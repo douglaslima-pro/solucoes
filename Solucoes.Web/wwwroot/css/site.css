@@ -1,0 +1,26 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    font-size: 14px;
+    position: relative;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+main {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}

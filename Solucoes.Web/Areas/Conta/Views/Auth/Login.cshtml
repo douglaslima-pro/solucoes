@@ -1,0 +1,89 @@
+﻿@model Solucoes.Web.Areas.Conta.Models.Auth.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Styles {
+    <style type="text/css">
+        .login-form {
+            max-width: 600px;
+        }
+    </style>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible col-sm-4 ms-auto fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="d-block m-auto w-100 login-form">
+    <div class="card shadow">
+        <h2 class="card-header">Realizar login</h2>
+        <div class="card-body">
+            <p class="card-text mb-4">Insira as suas informações de login para entrar na sua conta.</p>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger my-4" })
+
+            @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.ReturnUrl)
+                
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-addon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @aria_describedby = "email-addon" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-text" id="password-addon">
+                                <i class="fa-solid fa-key"></i>
+                            </span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @aria_describedby = "password-addon" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.RememberMe, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mb-3">
+                    <a asp-area="Conta" asp-controller="Auth" asp-action="ForgotPassword">Esqueceu sua senha?</a>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary d-block ms-auto" type="submit">Entrar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

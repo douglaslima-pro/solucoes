@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Solucoes.Application\Solucoes.Application.csproj" />
+    <ProjectReference Include="..\Solucoes.Infrastructure\Solucoes.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administracao\Controllers\" />
+    <Folder Include="Areas\Administracao\Models\" />
+    <Folder Include="Areas\Administracao\Views\Shared\" />
+    <Folder Include="Areas\Conta\Views\Shared\" />
+    <Folder Include="Areas\Projetos\Models\" />
+    <Folder Include="Areas\Projetos\Views\Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
