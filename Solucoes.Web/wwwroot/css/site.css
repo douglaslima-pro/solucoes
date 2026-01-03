@@ -24,3 +24,12 @@ main {
         font-size: 16px;
     }
 }
+
+.form-container {
+    display: block;
+    margin: auto;
+}
+
+.form-container-small {
+    max-width: 600px;
+}

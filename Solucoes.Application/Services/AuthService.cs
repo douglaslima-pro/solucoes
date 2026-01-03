@@ -28,6 +28,11 @@ namespace Solucoes.Application.Services
             return await _identityService.GenerateEmailConfirmationTokenAsync(email);
         }
 
+        public async Task<string?> GeneratePasswordResetTokenAsync(string email)
+        {
+            return await _identityService.GeneratePasswordResetTokenAsync(email);
+        }
+
         public async Task<bool> IsEmailConfirmedAsync(string email)
         {
             return await _identityService.IsEmailConfirmedAsync(email);
@@ -46,6 +51,11 @@ namespace Solucoes.Application.Services
         public async Task<RegisterResultDTO> RegisterAsync(RegisterRequestDTO model)
         {
             return await _identityService.RegisterAsync(model);
+        }
+
+        public async Task<ResetPasswordResultDTO> ResetPasswordAsync(ResetPasswordRequestDTO model)
+        {
+            return await _identityService.ResetPasswordAsync(model);
         }
 
         public async Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token)

@@ -11,5 +11,7 @@ namespace Solucoes.Application.Interfaces.Services
         Task<bool> IsEmailConfirmedAsync(string email);
         Task<string?> GenerateEmailConfirmationTokenAsync(string email);
         Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token);
+        Task<string?> GeneratePasswordResetTokenAsync(string email);
+        Task<ResetPasswordResultDTO> ResetPasswordAsync(ResetPasswordRequestDTO model);
     }
 }

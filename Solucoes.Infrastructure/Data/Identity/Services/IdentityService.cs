@@ -118,5 +118,27 @@ namespace Solucoes.Infrastructure.Data.Identity.Services
         {
             return await _userManager.FindByEmailAsync(email) != null;
         }
+
+        public async Task<string?> GeneratePasswordResetTokenAsync(string email)
+        {
+            var usuario = await _userManager.FindByEmailAsync(email);
+            return await _userManager.GeneratePasswordResetTokenAsync(usuario!);
+        }
+
+        public async Task<ResetPasswordResultDTO> ResetPasswordAsync(ResetPasswordRequestDTO model)
+        {
+            var usuario = await _userManager.FindByEmailAsync(model.Email!);
+
+            var result = await _userManager.ResetPasswordAsync(usuario!, model.Token!, model.Password!);
+
+            return new ResetPasswordResultDTO
+            {
+                Succeeded = result.Succeeded,
+                Errors = result.Errors.Select(e =>
+                {
+                    return new KeyValuePair<string, string>(e.Code, e.Description);
+                }).ToDictionary()
+            };
+        }
     }
 }

@@ -179,7 +179,77 @@ namespace Solucoes.Web.Areas.Conta.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (await _authService.ExistsAsync(model.Email!))
+            {
+                var token = await _authService.GeneratePasswordResetTokenAsync(model.Email!);
+
+                var body = @$"
+                    <h1>Redefinição de Senha</h1>
+                    <h2>Você solicitou a redefinição de sua senha.</h2>
+                    <p>
+                        Clique no link para prosseguir:
+                        <a href='{Url.Action("ResetPassword", "Auth", new { area = "Conta", email = model.Email!, token = token! }, Request.Scheme)}'>Redefinir Senha</a>
+                    </p>
+                    <p>
+                        Se você não solicitou essa alteração, por favor ignore este e-mail.
+                    </p>
+                ";
+
+                await _emailService.SendAsync(model.Email!, "Redefinição de Senha", body);
+            }
+
+            ViewBag.SuccessMessage = "Se o e-mail fornecido estiver cadastrado, um link para redefinição de senha foi enviado para ele.";
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("reset-password")]
+        public IActionResult ResetPassword(string? email, string? token)
+        {
+            var model = new ResetPasswordViewModel
+            {
+                Email = email,
+                Token = token
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("reset-password")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _authService.ResetPasswordAsync(new ResetPasswordRequestDTO
+            {
+                Email = model.Email,
+                Password = model.Password,
+                Token = model.Token
+            });
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    AddModelError(error);
+                }
+                return View(model);
+            }
+
+            TempData["SuccessMessage"] = "Senha redefinida com sucesso!";
+
+            return RedirectToAction("Login");
         }
 
         private async Task SendEmailConfirmationTokenAsync(string email)
@@ -190,7 +260,7 @@ namespace Solucoes.Web.Areas.Conta.Controllers
                 <h1>Confirmação de Cadastro</h1>
                 <h2>Obrigado por se cadastrar em nossa plataforma!</h2>
                 <p>
-                    Por favor, confirme seu cadastro clicando no link a seguir:
+                    Por favor, confirme seu cadastro clicando no link:
                     <a href='{Url.Action("ConfirmEmail", "Auth", new { area = "Conta", email, token = token! }, Request.Scheme)}'>Confirmar e-mail</a>
                 </p>
             ";
@@ -235,6 +305,11 @@ namespace Solucoes.Web.Areas.Conta.Controllers
 
                 case "PasswordRequiresUpper":
                     ModelState.AddModelError("Password", "A senha deve ter pelo menos uma letra maiúscula!");
+                    break;
+
+                // Token
+                case "InvalidToken":
+                    ModelState.AddModelError(string.Empty, "O token fornecido é inválido ou já expirou!");
                     break;
 
                 // Outros
