@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Solucoes.Application.DTOs.Auth;
+using Solucoes.Application.Interfaces.Email;
 using Solucoes.Application.Interfaces.Services;
 using Solucoes.Web.Areas.Conta.Models.Auth;
+using System.Net.Mail;
 
 namespace Solucoes.Web.Areas.Conta.Controllers
 {
@@ -10,10 +12,15 @@ namespace Solucoes.Web.Areas.Conta.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly IEmailService _emailService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(
+            IAuthService authService,
+            IEmailService emailService
+            )
         {
             _authService = authService;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -35,6 +42,19 @@ namespace Solucoes.Web.Areas.Conta.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            if (!await _authService.ExistsAsync(model.Email!))
+            {
+                ModelState.AddModelError(string.Empty, "As credenciais informadas são inválidas!");
+                return View(model);
+            }
+
+            if (!await _authService.IsEmailConfirmedAsync(model.Email!))
+            {
+                await SendEmailConfirmationTokenAsync(model.Email!);
+                ViewBag.ConfirmEmailMessage = "Conta não confirmada! Verifique o link de confirmação que foi enviado para o seu e-mail!";
                 return View(model);
             }
 
@@ -94,7 +114,9 @@ namespace Solucoes.Web.Areas.Conta.Controllers
                 return View(model);
             }
 
-            TempData["SuccessMessage"] = "Cadastro realizado com sucesso!";
+            await SendEmailConfirmationTokenAsync(model.Email!);
+
+            TempData["SuccessMessage"] = "Cadastro realizado com sucesso! Verifique o link de confirmação que foi enviado para o seu e-mail!";
 
             return RedirectToAction("Login");
         }
@@ -109,6 +131,43 @@ namespace Solucoes.Web.Areas.Conta.Controllers
         }
 
         [HttpGet]
+        [Route("email-confirmation")]
+        public async Task<IActionResult> ConfirmEmail(string? email, string? token)
+        {
+            var model = new ConfirmEmailViewModel();
+
+            if (email == null)
+            {
+                model.Succeeded = false;
+                model.Error = "O e-mail não foi fornecido.";
+
+                return View(model);
+            }
+
+            if (token == null)
+            {
+                model.Succeeded = false;
+                model.Error = "O token não foi fornecido.";
+
+                return View(model);
+            }
+   
+            var result = await _authService.VerifyEmailConfirmationTokenAsync(email, token);
+
+            if (!result)
+            {
+                model.Succeeded = false;
+                model.Error = "O token fornecido é inválido ou já expirou!";
+
+                return View(model);
+            }
+
+            model.Succeeded = true;
+
+            return View(model);
+        }
+
+        [HttpGet]
         [Route("forgot-password")]
         public IActionResult ForgotPassword()
         {
@@ -117,14 +176,31 @@ namespace Solucoes.Web.Areas.Conta.Controllers
 
         [HttpPost]
         [Route("forgot-password")]
-        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             return View();
         }
 
-        private void AddModelError(string error)
+        private async Task SendEmailConfirmationTokenAsync(string email)
         {
-            switch (error)
+            var token = await _authService.GenerateEmailConfirmationTokenAsync(email);
+
+            var body = @$"
+                <h1>Confirmação de Cadastro</h1>
+                <h2>Obrigado por se cadastrar em nossa plataforma!</h2>
+                <p>
+                    Por favor, confirme seu cadastro clicando no link a seguir:
+                    <a href='{Url.Action("ConfirmEmail", "Auth", new { area = "Conta", email, token = token! }, Request.Scheme)}'>Confirmar e-mail</a>
+                </p>
+            ";
+
+            await _emailService.SendAsync(email, "Confirmação de Cadastro", body);
+        }
+
+        private void AddModelError(KeyValuePair<string, string> error)
+        {
+            switch (error.Key)
             {
                 // Email
                 case "DuplicateEmail":
@@ -163,7 +239,7 @@ namespace Solucoes.Web.Areas.Conta.Controllers
 
                 // Outros
                 default:
-                    ModelState.AddModelError(string.Empty, "Erro ao cadastrar usuário:" + error);
+                    ModelState.AddModelError(string.Empty, $"Erro ao cadastrar usuário [{error.Key}]: {error.Value}");
                     break;
             }
         }

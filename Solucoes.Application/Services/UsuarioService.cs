@@ -18,7 +18,7 @@ namespace Solucoes.Application.Services
             _identityService = identityService;
         }
 
-        public async Task<UsuarioDTO?> FindByIdAsync(int id)
+        public async Task<UsuarioResultDTO?> FindByIdAsync(int id)
         {
             return await _identityService.FindByIdAsync(id);
         }

@@ -18,13 +18,23 @@ namespace Solucoes.Application.Services
             _identityService = identityService;
         }
 
+        public async Task<bool> ExistsAsync(string email)
+        {
+            return await _identityService.ExistsAsync(email);
+        }
+
+        public async Task<string?> GenerateEmailConfirmationTokenAsync(string email)
+        {
+            return await _identityService.GenerateEmailConfirmationTokenAsync(email);
+        }
+
+        public async Task<bool> IsEmailConfirmedAsync(string email)
+        {
+            return await _identityService.IsEmailConfirmedAsync(email);
+        }
+
         public async Task<LoginResultDTO> LoginAsync(LoginRequestDTO model)
         {
-            if (model.Email == null)
-            {
-                return LoginResultDTO.Failed("Email é obrigatório.");
-            }
-
             return await _identityService.LoginAsync(model);
         }
 
@@ -36,6 +46,11 @@ namespace Solucoes.Application.Services
         public async Task<RegisterResultDTO> RegisterAsync(RegisterRequestDTO model)
         {
             return await _identityService.RegisterAsync(model);
+        }
+
+        public async Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token)
+        {
+            return await _identityService.VerifyEmailConfirmationTokenAsync(email, token);
         }
     }
 }

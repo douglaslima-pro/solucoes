@@ -8,8 +8,20 @@ namespace Solucoes.Domain.Exceptions
 {
     public class DomainException : Exception
     {
-        public DomainException() : base() { }
-        public DomainException(string message) : base(message) { }
-        public DomainException(string message, Exception innerException) : base(message, innerException) { }
+        public string FieldName { get; set; }
+
+        public DomainException(string fieldName) : base()
+        {
+            FieldName = fieldName;
+        }
+
+        public DomainException(string fieldName, string message) : base(message)
+        {
+            FieldName = fieldName;
+        }
+        public DomainException(string fieldName, string message, Exception innerException) : base(message, innerException)
+        {
+            FieldName = fieldName;
+        }
     }
 }

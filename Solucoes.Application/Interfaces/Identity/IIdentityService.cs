@@ -10,9 +10,13 @@ namespace Solucoes.Application.Interfaces.Identity
 {
     public interface IIdentityService
     {
+        Task<bool> ExistsAsync(string email);
         Task<LoginResultDTO> LoginAsync(LoginRequestDTO model);
         Task<RegisterResultDTO> RegisterAsync(RegisterRequestDTO model);
         Task LogoutAsync();
-        Task<UsuarioDTO?> FindByIdAsync(int id);
+        Task<UsuarioResultDTO?> FindByIdAsync(int id);
+        Task<bool> IsEmailConfirmedAsync(string email);
+        Task<string?> GenerateEmailConfirmationTokenAsync(string email);
+        Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token);
     }
 }

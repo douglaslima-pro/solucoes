@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Solucoes.Infrastructure.Data.Identity
+namespace Solucoes.Infrastructure.Data.Identity.Entities
 {
     public class Usuario : IdentityUser<int>
     {

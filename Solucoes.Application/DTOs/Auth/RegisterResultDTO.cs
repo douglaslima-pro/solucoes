@@ -9,18 +9,11 @@ namespace Solucoes.Application.DTOs.Auth
     public class RegisterResultDTO
     {
         public bool Succeeded { get; set; }
-        public IEnumerable<string> Errors { get; set; }
+        public IDictionary<string, string> Errors { get; set; }
 
         public RegisterResultDTO()
         {
-            Errors = new List<string>();
+            Errors = new Dictionary<string, string>();
         }
-
-        public static RegisterResultDTO Failed(IEnumerable<string> errors) =>
-            new RegisterResultDTO
-            {
-                Succeeded = false,
-                Errors = errors
-            };
     }
 }

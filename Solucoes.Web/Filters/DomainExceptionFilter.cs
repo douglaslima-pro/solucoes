@@ -10,7 +10,7 @@ namespace Solucoes.Web.Filters
             if (context.Exception is DomainException ex)
             {
                 context.HttpContext.Response.StatusCode = 400;
-                context.ModelState.AddModelError(string.Empty, ex.Message);
+                context.ModelState.AddModelError(ex.FieldName, ex.Message);
                 context.ExceptionHandled = true;
             }
         }

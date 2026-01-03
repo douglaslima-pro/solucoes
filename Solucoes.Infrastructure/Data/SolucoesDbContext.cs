@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Solucoes.Infrastructure.Data.Configurations;
-using Solucoes.Infrastructure.Data.Identity;
+using Solucoes.Infrastructure.Data.Identity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

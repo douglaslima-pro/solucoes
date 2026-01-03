@@ -7,11 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Mail\**" />
+    <Compile Remove="Smtp\**" />
+    <EmbeddedResource Remove="Mail\**" />
+    <EmbeddedResource Remove="Smtp\**" />
+    <None Remove="Mail\**" />
+    <None Remove="Smtp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Solucoes.Application\Solucoes.Application.csproj" />
     <ProjectReference Include="..\Solucoes.Domain\Solucoes.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.73.0" />
+    <PackageReference Include="MailKit" Version="4.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />

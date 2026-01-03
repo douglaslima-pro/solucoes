@@ -9,6 +9,6 @@ namespace Solucoes.Application.Interfaces.Services
 {
     public interface IUsuarioService
     {
-        Task<UsuarioDTO?> FindByIdAsync(int id);
+        Task<UsuarioResultDTO?> FindByIdAsync(int id);
     }
 }

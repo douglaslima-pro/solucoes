@@ -13,7 +13,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddRouting(options =>
 {
-    options.LowercaseQueryStrings = true;
+    options.LowercaseQueryStrings = false;
     options.LowercaseUrls = true;
 });
 

@@ -1,0 +1,20 @@
+﻿@model Solucoes.Web.Areas.Conta.Models.Auth.ConfirmEmailViewModel
+
+@{
+    ViewData["Title"] = "Confirmar E-mail";
+}
+
+<div class="container">
+    @if (Model.Succeeded)
+    {
+        <h1>E-mail confirmado com sucesso!</h1>
+        <p>O seu e-mail foi confirmado. Agora você pode efetuar o login na sua conta.</p>
+        <a asp-area="Conta" asp-controller="Auth" asp-action="Login">Ir para Login</a>
+    }
+    else
+    {
+        <h1>Erro ao confirmar e-mail</h1>
+        <p>Houve um problema ao confirmar o seu e-mail. Por favor, tente novamente ou entre em contato com o suporte.</p>
+        <p><strong>Erro:</strong> @Model.Error</p>
+    }
+</div>

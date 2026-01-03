@@ -1,16 +1,15 @@
 ﻿using Solucoes.Application.DTOs.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Solucoes.Application.Interfaces.Services
 {
     public interface IAuthService
     {
+        Task<bool> ExistsAsync(string email);
         Task<LoginResultDTO> LoginAsync(LoginRequestDTO model);
         Task<RegisterResultDTO> RegisterAsync(RegisterRequestDTO model);
         Task LogoutAsync();
+        Task<bool> IsEmailConfirmedAsync(string email);
+        Task<string?> GenerateEmailConfirmationTokenAsync(string email);
+        Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token);
     }
 }
