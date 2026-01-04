@@ -1,5 +1,4 @@
-﻿using Google.Apis.Auth.OAuth2;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;

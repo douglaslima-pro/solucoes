@@ -26,6 +26,9 @@ namespace Solucoes.Infrastructure.Data.Configurations
             builder.Property(u => u.IsActive)
                 .HasDefaultValue(true)
                 .IsRequired();
+
+            builder.HasMany(x => x.Projetos)
+                .WithOne();
         }
     }
 }
