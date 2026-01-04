@@ -1,6 +1,7 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 using Solucoes.Application.Interfaces.Email;
@@ -11,6 +12,17 @@ namespace Solucoes.Infrastructure.Email.Services
 {
     public class EmailService : IEmailService
     {
+        private readonly IConfiguration _configuration;
+        private readonly string? _email;
+        private readonly string? _password;
+
+        public EmailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _email = _configuration["EmailSettings:Email"];
+            _password = _configuration["EmailSettings:Password"];
+        }
+
         public async Task SendAsync(string to, string subject, string body, bool isHtml = true)
         {
             var message = new MimeMessage
@@ -22,15 +34,12 @@ namespace Solucoes.Infrastructure.Email.Services
                 }
             };
             message.To.Add(new MailboxAddress("", to));
-            message.From.Add(new MailboxAddress("Solucoes App", "noreply.solucoes.app@gmail.com"));
+            message.From.Add(new MailboxAddress("Solucoes App", _email));
 
             using var smtpClient = new SmtpClient();
             await smtpClient.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
 
-            var userName = Environment.GetEnvironmentVariable("SOLUCOES_USERNAME", EnvironmentVariableTarget.Machine);
-            var password = Environment.GetEnvironmentVariable("SOLUCOES_PASSWORD", EnvironmentVariableTarget.Machine);
-
-            await smtpClient.AuthenticateAsync(userName, password);
+            await smtpClient.AuthenticateAsync(_email, _password);
             
             await smtpClient.SendAsync(message);
             await smtpClient.DisconnectAsync(true);
