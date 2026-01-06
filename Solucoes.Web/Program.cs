@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Solucoes.Infrastructure.IoC;
 using Solucoes.Web.Filters;
 
@@ -16,6 +17,8 @@ builder.Services.AddRouting(options =>
     options.LowercaseQueryStrings = false;
     options.LowercaseUrls = true;
 });
+
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 var app = builder.Build();
 

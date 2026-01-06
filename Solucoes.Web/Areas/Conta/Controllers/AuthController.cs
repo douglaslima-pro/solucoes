@@ -53,7 +53,10 @@ namespace Solucoes.Web.Areas.Conta.Controllers
 
             if (!await _authService.IsEmailConfirmedAsync(model.Email!))
             {
-                await SendEmailConfirmationTokenAsync(model.Email!);
+                var token = await _authService.GenerateEmailConfirmationTokenAsync(model.Email!);
+
+                await _emailService.SendEmailConfirmationTokenAsync(model.Email!, token!);
+
                 ViewBag.ConfirmEmailMessage = "Conta não confirmada! Verifique o link de confirmação que foi enviado para o seu e-mail!";
                 return View(model);
             }
@@ -114,7 +117,9 @@ namespace Solucoes.Web.Areas.Conta.Controllers
                 return View(model);
             }
 
-            await SendEmailConfirmationTokenAsync(model.Email!);
+            var token = await _authService.GenerateEmailConfirmationTokenAsync(model.Email!);
+
+            await _emailService.SendEmailConfirmationTokenAsync(model.Email!, token!);
 
             TempData["SuccessMessage"] = "Cadastro realizado com sucesso! Verifique o link de confirmação que foi enviado para o seu e-mail!";
 
@@ -188,19 +193,7 @@ namespace Solucoes.Web.Areas.Conta.Controllers
             {
                 var token = await _authService.GeneratePasswordResetTokenAsync(model.Email!);
 
-                var body = @$"
-                    <h1>Redefinição de Senha</h1>
-                    <h2>Você solicitou a redefinição de sua senha.</h2>
-                    <p>
-                        Clique no link para prosseguir:
-                        <a href='{Url.Action("ResetPassword", "Auth", new { area = "Conta", email = model.Email!, token = token! }, Request.Scheme)}'>Redefinir Senha</a>
-                    </p>
-                    <p>
-                        Se você não solicitou essa alteração, por favor ignore este e-mail.
-                    </p>
-                ";
-
-                await _emailService.SendAsync(model.Email!, "Redefinição de Senha", body);
+                await _emailService.SendResetPasswordTokenAsync(model.Email!, token!);
             }
 
             ViewBag.SuccessMessage = "Se o e-mail fornecido estiver cadastrado, um link para redefinição de senha foi enviado para ele.";
@@ -250,22 +243,6 @@ namespace Solucoes.Web.Areas.Conta.Controllers
             TempData["SuccessMessage"] = "Senha redefinida com sucesso!";
 
             return RedirectToAction("Login");
-        }
-
-        private async Task SendEmailConfirmationTokenAsync(string email)
-        {
-            var token = await _authService.GenerateEmailConfirmationTokenAsync(email);
-
-            var body = @$"
-                <h1>Confirmação de Cadastro</h1>
-                <h2>Obrigado por se cadastrar em nossa plataforma!</h2>
-                <p>
-                    Por favor, confirme seu cadastro clicando no link:
-                    <a href='{Url.Action("ConfirmEmail", "Auth", new { area = "Conta", email, token = token! }, Request.Scheme)}'>Confirmar e-mail</a>
-                </p>
-            ";
-
-            await _emailService.SendAsync(email, "Confirmação de Cadastro", body);
         }
 
         private void AddModelError(KeyValuePair<string, string> error)

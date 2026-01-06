@@ -134,6 +134,11 @@ namespace Solucoes.Domain.Entities.Tables
 
         public void AdicionarConvite(ProjetoConvite convite)
         {
+            if (convite.ProjetoId != Id)
+            {
+                throw new DomainException(string.Empty, "O convite não pertence a este projeto.");
+            }
+
             if (convite.ProjetoPapelId == 1)
             {
                 throw new DomainException(string.Empty, "Não é permitido convidar um Product Owner para o projeto.");

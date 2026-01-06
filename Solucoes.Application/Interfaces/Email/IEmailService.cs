@@ -9,5 +9,7 @@ namespace Solucoes.Application.Interfaces.Email
     public interface IEmailService
     {
         Task SendAsync(string to, string subject, string body, bool isHtml = true);
+        Task SendEmailConfirmationTokenAsync(string email, string token);
+        Task SendResetPasswordTokenAsync(string email, string token);
     }
 }
