@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Solucoes.Application.DTOs.Auth;
 using Solucoes.Application.Interfaces.Email;
-using Solucoes.Application.Interfaces.Services;
+using Solucoes.Application.Interfaces.Identity;
 using Solucoes.Web.Areas.Conta.Models.Auth;
-using System.Net.Mail;
 
 namespace Solucoes.Web.Areas.Conta.Controllers
 {
@@ -45,7 +44,7 @@ namespace Solucoes.Web.Areas.Conta.Controllers
                 return View(model);
             }
 
-            if (!await _authService.ExistsAsync(model.Email!))
+            if (!await _authService.CheckPasswordAsync(model.Email!, model.Password!))
             {
                 ModelState.AddModelError(string.Empty, "As credenciais informadas são inválidas!");
                 return View(model);

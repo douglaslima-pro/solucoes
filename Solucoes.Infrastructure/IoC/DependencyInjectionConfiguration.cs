@@ -4,13 +4,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Solucoes.Infrastructure.Data;
-using Solucoes.Application.Interfaces.Services;
-using Solucoes.Application.Services;
 using Solucoes.Application.Interfaces.Identity;
-using Solucoes.Infrastructure.Data.Identity.Services;
 using Solucoes.Infrastructure.Data.Identity.Entities;
 using Solucoes.Application.Interfaces.Email;
 using Solucoes.Infrastructure.Email.Services;
+using Solucoes.Infrastructure.Data.Identity.Services;
+using Solucoes.Domain.Repositories;
+using Solucoes.Infrastructure.Data.Repositories;
+using Solucoes.Application.Interfaces.Services;
+using Solucoes.Application.Services;
 
 namespace Solucoes.Infrastructure.IoC
 {
@@ -56,12 +58,12 @@ namespace Solucoes.Infrastructure.IoC
 
             // Services
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IProjetoService, ProjetoService>();
 
             // Repositories
-
+            services.AddScoped<IProjetoRepository, ProjetoRepository>();
         }
     }
 }

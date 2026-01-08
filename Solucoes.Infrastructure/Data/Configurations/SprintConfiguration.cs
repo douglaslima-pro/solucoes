@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Solucoes.Domain.Entities.Tables;
-using Solucoes.Infrastructure.Data.Identity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Solucoes.Domain.Entities.Projetos.Sprints;
 
 namespace Solucoes.Infrastructure.Data.Configurations
 {
@@ -55,10 +49,10 @@ namespace Solucoes.Infrastructure.Data.Configurations
                 .HasDefaultValueSql("SYSUTCDATETIME()")
                 .IsRequired();
 
-            builder.HasMany(s => s.Itens)
-                .WithOne(i => i.Sprint)
-                .HasForeignKey(i => i.SprintId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(s => s.Backlog)
+                .WithOne(sb => sb.Sprint)
+                .HasForeignKey(sb => sb.SprintId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

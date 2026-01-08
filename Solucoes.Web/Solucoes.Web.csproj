@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Conta\Views\Shared\**" />
+    <Content Remove="Areas\Conta\Views\Shared\**" />
+    <EmbeddedResource Remove="Areas\Conta\Views\Shared\**" />
+    <None Remove="Areas\Conta\Views\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Solucoes.Application\Solucoes.Application.csproj" />
     <ProjectReference Include="..\Solucoes.Infrastructure\Solucoes.Infrastructure.csproj" />
   </ItemGroup>
@@ -16,7 +23,6 @@
     <Folder Include="Areas\Administracao\Controllers\" />
     <Folder Include="Areas\Administracao\Models\" />
     <Folder Include="Areas\Administracao\Views\Shared\" />
-    <Folder Include="Areas\Conta\Views\Shared\" />
     <Folder Include="Areas\Projetos\Models\" />
     <Folder Include="Areas\Projetos\Views\Shared\" />
   </ItemGroup>

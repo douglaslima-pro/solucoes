@@ -155,7 +155,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklog", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,9 +187,6 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Property<int?>("ResponsavelProjetoMembroId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SprintId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -206,12 +203,10 @@ namespace Solucoes.Infrastructure.Data.Migrations
 
                     b.HasIndex("ResponsavelProjetoMembroId");
 
-                    b.HasIndex("SprintId");
-
                     b.ToTable("ItemBacklogs", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogAnexo", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogAnexo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -247,7 +242,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("ItemBacklogAnexos", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogComentario", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogComentario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -279,7 +274,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("ItemBacklogComentarios", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogHistorico", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogHistorico", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,7 +312,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("ItemBacklogHistoricos", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogStatus", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -375,7 +370,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogTipo", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogTipo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -421,7 +416,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Projeto", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Projeto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -456,7 +451,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("Projetos", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoConvite", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoConvite", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -509,7 +504,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("ProjetoConvites", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoMembro", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoMembro", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -547,7 +542,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.ToTable("ProjetoMembros", (string)null);
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoPapel", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoPapel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -599,7 +594,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Sprint", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Sprints.Sprint", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -640,6 +635,29 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.HasIndex("ProjetoId");
 
                     b.ToTable("Sprints", (string)null);
+                });
+
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Sprints.SprintBacklog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ItemBacklogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SprintId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemBacklogId");
+
+                    b.HasIndex("SprintId");
+
+                    b.ToTable("SprintBacklogs", (string)null);
                 });
 
             modelBuilder.Entity("Solucoes.Infrastructure.Data.Identity.Entities.Usuario", b =>
@@ -775,40 +793,35 @@ namespace Solucoes.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklog", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "CriadoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "CriadoPorProjetoMembro")
                         .WithMany()
                         .HasForeignKey("CriadoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklogStatus", "ItemBacklogStatus")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogStatus", "ItemBacklogStatus")
                         .WithMany()
                         .HasForeignKey("ItemBacklogStatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklogTipo", "ItemBacklogTipo")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogTipo", "ItemBacklogTipo")
                         .WithMany()
                         .HasForeignKey("ItemBacklogTipoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.Projeto", "Projeto")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.Projeto", "Projeto")
                         .WithMany("Backlog")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "ResponsavelProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "ResponsavelProjetoMembro")
                         .WithMany("Tarefas")
                         .HasForeignKey("ResponsavelProjetoMembroId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Solucoes.Domain.Entities.Tables.Sprint", "Sprint")
-                        .WithMany("Itens")
-                        .HasForeignKey("SprintId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("CriadoPorProjetoMembro");
@@ -820,19 +833,17 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("Projeto");
 
                     b.Navigation("ResponsavelProjetoMembro");
-
-                    b.Navigation("Sprint");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogAnexo", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogAnexo", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "CriadoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "CriadoPorProjetoMembro")
                         .WithMany()
                         .HasForeignKey("CriadoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklog", "ItemBacklog")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", "ItemBacklog")
                         .WithMany("Anexos")
                         .HasForeignKey("ItemBacklogId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -843,15 +854,15 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("ItemBacklog");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogComentario", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogComentario", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "CriadoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "CriadoPorProjetoMembro")
                         .WithMany()
                         .HasForeignKey("CriadoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklog", "ItemBacklog")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", "ItemBacklog")
                         .WithMany("Comentarios")
                         .HasForeignKey("ItemBacklogId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -862,27 +873,27 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("ItemBacklog");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklogHistorico", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogHistorico", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "AlteradoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "AlteradoPorProjetoMembro")
                         .WithMany()
                         .HasForeignKey("AlteradoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklog", "ItemBacklog")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", "ItemBacklog")
                         .WithMany("Historico")
                         .HasForeignKey("ItemBacklogId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklogStatus", "ItemBacklogStatusAnterior")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogStatus", "ItemBacklogStatusAnterior")
                         .WithMany()
                         .HasForeignKey("ItemBacklogStatusAnteriorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ItemBacklogStatus", "ItemBacklogStatusAtual")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklogStatus", "ItemBacklogStatusAtual")
                         .WithMany()
                         .HasForeignKey("ItemBacklogStatusAtualId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -897,7 +908,7 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("ItemBacklogStatusAtual");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Projeto", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Projeto", b =>
                 {
                     b.HasOne("Solucoes.Infrastructure.Data.Identity.Entities.Usuario", null)
                         .WithMany()
@@ -906,21 +917,21 @@ namespace Solucoes.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoConvite", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoConvite", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "CriadoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "CriadoPorProjetoMembro")
                         .WithMany("ProjetoConvites")
                         .HasForeignKey("CriadoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.Projeto", "Projeto")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.Projeto", "Projeto")
                         .WithMany("Convites")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoPapel", "ProjetoPapel")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoPapel", "ProjetoPapel")
                         .WithMany()
                         .HasForeignKey("ProjetoPapelId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -939,15 +950,15 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("ProjetoPapel");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoMembro", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoMembro", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.Projeto", "Projeto")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.Projeto", "Projeto")
                         .WithMany("Membros")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoPapel", "ProjetoPapel")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoPapel", "ProjetoPapel")
                         .WithMany()
                         .HasForeignKey("ProjetoPapelId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -964,15 +975,15 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("ProjetoPapel");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Sprint", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Sprints.Sprint", b =>
                 {
-                    b.HasOne("Solucoes.Domain.Entities.Tables.ProjetoMembro", "CriadoPorProjetoMembro")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ProjetoMembro", "CriadoPorProjetoMembro")
                         .WithMany()
                         .HasForeignKey("CriadoPorProjetoMembroId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Solucoes.Domain.Entities.Tables.Projeto", "Projeto")
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.Projeto", "Projeto")
                         .WithMany("Sprints")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -983,16 +994,37 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("Projeto");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ItemBacklog", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Sprints.SprintBacklog", b =>
+                {
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", "ItemBacklog")
+                        .WithMany("Sprints")
+                        .HasForeignKey("ItemBacklogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Solucoes.Domain.Entities.Projetos.Sprints.Sprint", "Sprint")
+                        .WithMany("Backlog")
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ItemBacklog");
+
+                    b.Navigation("Sprint");
+                });
+
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ItemBacklogs.ItemBacklog", b =>
                 {
                     b.Navigation("Anexos");
 
                     b.Navigation("Comentarios");
 
                     b.Navigation("Historico");
+
+                    b.Navigation("Sprints");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Projeto", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Projeto", b =>
                 {
                     b.Navigation("Backlog");
 
@@ -1003,16 +1035,16 @@ namespace Solucoes.Infrastructure.Data.Migrations
                     b.Navigation("Sprints");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.ProjetoMembro", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.ProjetoMembro", b =>
                 {
                     b.Navigation("ProjetoConvites");
 
                     b.Navigation("Tarefas");
                 });
 
-            modelBuilder.Entity("Solucoes.Domain.Entities.Tables.Sprint", b =>
+            modelBuilder.Entity("Solucoes.Domain.Entities.Projetos.Sprints.Sprint", b =>
                 {
-                    b.Navigation("Itens");
+                    b.Navigation("Backlog");
                 });
 
             modelBuilder.Entity("Solucoes.Infrastructure.Data.Identity.Entities.Usuario", b =>

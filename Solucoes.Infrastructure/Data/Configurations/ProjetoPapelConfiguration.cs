@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Solucoes.Domain.Entities.Tables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Solucoes.Domain.Entities.Projetos;
 
 namespace Solucoes.Infrastructure.Data.Configurations
 {

@@ -8,17 +8,15 @@ namespace Solucoes.Domain.Exceptions
 {
     public class DomainException : Exception
     {
-        public string FieldName { get; set; }
+        public string FieldName { get; set; } = string.Empty;
 
-        public DomainException(string fieldName) : base()
-        {
-            FieldName = fieldName;
-        }
+        public DomainException(string message) : base(message) { }
 
         public DomainException(string fieldName, string message) : base(message)
         {
             FieldName = fieldName;
         }
+
         public DomainException(string fieldName, string message, Exception innerException) : base(message, innerException)
         {
             FieldName = fieldName;

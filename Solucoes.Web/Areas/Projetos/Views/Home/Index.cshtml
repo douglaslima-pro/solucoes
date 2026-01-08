@@ -1,9 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Página Inicial - Projetos";
+﻿@model IEnumerable<Solucoes.Web.Areas.Projetos.Models.Home.ProjetoViewModel>
+
+@{
+	ViewData["Title"] = "Página Inicial - Projetos";
 }
 
 <div class="container">
-    <h1>Bem-vindo, @(ViewBag.Nome)!</h1>
-    <p>Esta é a página inicial da área de Projetos.</p>
-    <p>Aqui você pode gerenciar seus projetos e tarefas.</p>
+	<div class="mb-3">
+		<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
+		<p>Esta é a página inicial da área de Projetos.</p>
+		<p>Aqui você pode gerenciar seus projetos e tarefas.</p>
+	</div>
+	<div class="d-flex justify-content-end mb-4">
+		<a class="btn btn-primary" asp-area="Projetos" asp-controller="Projeto" asp-action="Criar">
+			<i class="fa-solid fa-plus"></i>
+			Adicionar projeto
+		</a>
+	</div>
+	@if (Model.Count() > 0)
+	{
+		<div class="d-flex flex-wrap align-items-center justify-content-between" style="gap: 10px">
+			@foreach (var item in Model)
+			{
+				<div class="card">
+					<div class="card-body">
+						<h2 class="card-title">@item.Nome</h2>
+						<p class="card-text">
+							<strong>Qtd. de membros:</strong>
+							@item.QuantidadeMembros
+						</p>
+						<p class="card-text">@item.Descricao</p>
+						<a class="card-link" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Ir para projeto</a>
+					</div>
+				</div>
+			}
+		</div>
+	}
+	else
+	{
+		<div class="p-4">
+			<h2 class="text-center text-muted">Você ainda não criou nenhum projeto...</h2>
+		</div>
+	}
 </div>

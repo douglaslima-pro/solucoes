@@ -1,5 +1,6 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -13,18 +14,24 @@ namespace Solucoes.Infrastructure.Email.Services
     public class EmailService : IEmailService
     {
         private readonly IUrlHelper _urlHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
+
+        private string RequestScheme => _httpContextAccessor.HttpContext.Request.Scheme;
+        private string Host => _httpContextAccessor.HttpContext.Request.Host.ToUriComponent();
 
         private readonly string? _email;
         private readonly string? _password;
 
         public EmailService(
             IUrlHelperFactory urlHelperFactory,
+            IHttpContextAccessor httpContextAccessor,
             IActionContextAccessor actionContextAccessor,
             IConfiguration configuration
             )
         {
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
+            _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
             _email = _configuration["EmailSettings:Email"];
             _password = _configuration["EmailSettings:Password"];
@@ -59,7 +66,7 @@ namespace Solucoes.Infrastructure.Email.Services
                 <h2>Obrigado por se cadastrar em nossa plataforma!</h2>
                 <p>
                     Por favor, confirme seu cadastro clicando no link:
-                    <a href='{_urlHelper.Action("ConfirmEmail", "Auth", new { area = "Conta", email, token = token! })}'>Confirmar e-mail</a>
+                    <a href='{_urlHelper.Action("ConfirmEmail", "Auth", new { area = "Conta", email, token = token! }, RequestScheme, Host)}'>Confirmar e-mail</a>
                 </p>
             ";
 
@@ -73,7 +80,7 @@ namespace Solucoes.Infrastructure.Email.Services
                     <h2>Você solicitou a redefinição de sua senha.</h2>
                     <p>
                         Clique no link para prosseguir:
-                        <a href='{_urlHelper.Action("ResetPassword", "Auth", new { area = "Conta", email = email!, token = token! })}'>Redefinir Senha</a>
+                        <a href='{_urlHelper.Action("ResetPassword", "Auth", new { area = "Conta", email = email!, token = token! }, RequestScheme, Host)}'>Redefinir Senha</a>
                     </p>
                     <p>
                         Se você não solicitou essa alteração, por favor ignore este e-mail.

@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Solucoes.Domain.Entities.Tables;
+using Solucoes.Domain.Entities.Projetos;
+using Solucoes.Domain.Entities.Projetos.ItemBacklogs;
+using Solucoes.Domain.Entities.Projetos.Sprints;
 using Solucoes.Infrastructure.Data.Configurations;
 using Solucoes.Infrastructure.Data.Identity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Solucoes.Infrastructure.Data
 {
@@ -20,6 +17,7 @@ namespace Solucoes.Infrastructure.Data
         public DbSet<ProjetoConvite> ProjetoConvites { get; set; }
         public DbSet<ProjetoPapel> ProjetoPapeis { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
+        public DbSet<SprintBacklog> SprintBacklogs { get; set; }
         public DbSet<ItemBacklog> ItemBacklogs { get; set; }
         public DbSet<ItemBacklogAnexo> ItemBacklogAnexos { get; set; }
         public DbSet<ItemBacklogComentario> ItemBacklogComentarios { get; set; }
@@ -37,6 +35,7 @@ namespace Solucoes.Infrastructure.Data
             builder.ApplyConfiguration(new ProjetoConviteConfiguration());
             builder.ApplyConfiguration(new ProjetoPapelConfiguration());
             builder.ApplyConfiguration(new SprintConfiguration());
+            builder.ApplyConfiguration(new SprintBacklogConfiguration());
             builder.ApplyConfiguration(new ItemBacklogConfiguration());
             builder.ApplyConfiguration(new ItemBacklogAnexoConfiguration());
             builder.ApplyConfiguration(new ItemBacklogComentarioConfiguration());

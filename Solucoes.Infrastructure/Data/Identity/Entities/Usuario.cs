@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Solucoes.Domain.Entities.Tables;
+using Solucoes.Domain.Entities.Projetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

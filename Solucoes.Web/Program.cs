@@ -19,6 +19,7 @@ builder.Services.AddRouting(options =>
 });
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

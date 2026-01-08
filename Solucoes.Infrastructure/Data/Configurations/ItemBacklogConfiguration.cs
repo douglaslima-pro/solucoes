@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Solucoes.Domain.Entities.Tables;
-using Solucoes.Infrastructure.Data.Identity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Solucoes.Domain.Entities.Projetos.ItemBacklogs;
 
 namespace Solucoes.Infrastructure.Data.Configurations
 {
@@ -28,10 +22,10 @@ namespace Solucoes.Infrastructure.Data.Configurations
                 .HasForeignKey(ib => ib.ProjetoId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(ib => ib.Sprint)
-                .WithMany(s => s.Itens)
-                .HasForeignKey(ib => ib.SprintId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(ib => ib.Sprints)
+                .WithOne(sb => sb.ItemBacklog)
+                .HasForeignKey(sb => sb.ItemBacklogId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(ib => ib.Titulo)
                 .HasColumnType("nvarchar(100)")
