@@ -4,15 +4,9 @@ using Solucoes.Domain.Repositories;
 
 namespace Solucoes.Infrastructure.Data.Repositories
 {
-    public class ProjetoRepository : Repository<Projeto, SolucoesDbContext>, IProjetoRepository
+    public class ProjetoRepository : CrudRepository<Projeto, int, SolucoesDbContext>, IProjetoRepository
     {
         public ProjetoRepository(SolucoesDbContext context) : base(context) { }
-
-        public async Task<Projeto?> ObterProjetoPeloIdAsync(int projetoId)
-        {
-            return await _entity
-                .FindAsync(projetoId);
-        }
 
         public async Task<IEnumerable<Projeto>> ObterProjetosCriadosPeloUsuarioAsync(int usuarioId)
         {
@@ -20,6 +14,7 @@ namespace Solucoes.Infrastructure.Data.Repositories
                 .AsNoTracking()
                 .Include(x => x.Membros)
                 .Where(x => x.CriadoPorUsuarioId == usuarioId)
+                .OrderByDescending(x => x.CriadoEm)
                 .ToListAsync();
         }
     }

@@ -2,9 +2,8 @@
 
 namespace Solucoes.Domain.Repositories
 {
-    public interface IProjetoRepository : IRepository<Projeto>
+    public interface IProjetoRepository : ICrudRepository<Projeto, int>
     {
-        Task<Projeto?> ObterProjetoPeloIdAsync(int projetoId);
         Task<IEnumerable<Projeto>> ObterProjetosCriadosPeloUsuarioAsync(int usuarioId);
     }
 }

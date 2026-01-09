@@ -4,41 +4,53 @@
 	ViewData["Title"] = "Página Inicial - Projetos";
 }
 
-<div class="container">
-	<div class="mb-3">
-		<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
-		<p>Esta é a página inicial da área de Projetos.</p>
-		<p>Aqui você pode gerenciar seus projetos e tarefas.</p>
-	</div>
-	<div class="d-flex justify-content-end mb-4">
-		<a class="btn btn-primary" asp-area="Projetos" asp-controller="Projeto" asp-action="Criar">
-			<i class="fa-solid fa-plus"></i>
-			Adicionar projeto
-		</a>
-	</div>
-	@if (Model.Count() > 0)
+<div class="container py-5">
+	@if (TempData["SuccessMessage"] != null)
 	{
-		<div class="d-flex flex-wrap align-items-center justify-content-between" style="gap: 10px">
-			@foreach (var item in Model)
-			{
-				<div class="card">
-					<div class="card-body">
-						<h2 class="card-title">@item.Nome</h2>
-						<p class="card-text">
-							<strong>Qtd. de membros:</strong>
-							@item.QuantidadeMembros
-						</p>
-						<p class="card-text">@item.Descricao</p>
-						<a class="card-link" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Ir para projeto</a>
+		<div class="alert alert-success alert-dismissible col-sm-4 ms-auto fade show" role="alert">
+			@TempData["SuccessMessage"]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+	<div class="row">
+		<div class="col-12 mb-3">
+			<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
+			<p>Esta é a página inicial da área de Projetos.</p>
+			<p>Aqui você pode gerenciar seus projetos e convites.</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<ul class="nav nav-tabs card-header-tabs" id="tab" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="projetos-tab" data-bs-toggle="tab" data-bs-target="#projetos" type="button" role="tab" aria-controls="projetos" aria-selected="true">Projetos</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="convites-tab" data-bs-toggle="tab" data-bs-target="#convites" type="button" role="tab" aria-controls="convites" aria-selected="false">Convites</button>
+						</li>
+					</ul>
+				</div>
+				<div class="card-body">
+					<div class="tab-content" id="tab-content">
+						<div class="tab-pane fade show active" id="projetos" role="tabpanel" aria-labelledby="projetos-tab">
+							@await Html.PartialAsync("_Projetos", Model)
+						</div>
+						<div class="tab-pane fade" id="convites" role="tabpanel" aria-labelledby="convites-tab">
+							@{
+								await Html.RenderPartialAsync("_Convites");
+							}
+						</div>
 					</div>
 				</div>
-			}
+			</div>
 		</div>
-	}
-	else
-	{
-		<div class="p-4">
-			<h2 class="text-center text-muted">Você ainda não criou nenhum projeto...</h2>
-		</div>
-	}
+	</div>
 </div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

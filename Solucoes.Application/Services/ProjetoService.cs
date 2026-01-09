@@ -1,5 +1,6 @@
 ﻿using Solucoes.Application.DTOs.Projeto;
 using Solucoes.Application.Interfaces.Services;
+using Solucoes.Domain.Entities.Projetos;
 using Solucoes.Domain.Repositories;
 
 namespace Solucoes.Application.Services
@@ -13,9 +14,17 @@ namespace Solucoes.Application.Services
             _projetoRepository = projetoRepository;
         }
 
+        public async Task CriarProjetoAsync(CriarProjetoDTO model)
+        {
+            var projeto = new Projeto(model.Nome!, model.Descricao!, model.CriadoPorUsuarioId);
+
+            await _projetoRepository.AddAsync(projeto);
+            await _projetoRepository.SaveChangesAsync();
+        }
+
         public async Task<ProjetoDTO?> ObterProjetoPeloIdAsync(int projetoId)
         {
-            var dados = await _projetoRepository.ObterProjetoPeloIdAsync(projetoId);
+            var dados = await _projetoRepository.FindByIdAsync(projetoId);
 
             if (dados == null)
             {

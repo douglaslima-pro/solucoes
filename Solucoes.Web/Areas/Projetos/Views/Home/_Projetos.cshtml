@@ -1,0 +1,59 @@
+﻿@using Solucoes.Web.Areas.Projetos.Models.Home
+
+@model IEnumerable<ProjetoViewModel>
+
+<div class="row my-4">
+	<div class="col-12 mb-3">
+		<button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
+			<i class="fa-solid fa-plus"></i>
+			Adicionar projeto
+		</button>
+	</div>
+</div>
+<div class="row">
+	@if (Model.Count() > 0)
+	{
+		<div class="col-sm-12 offset-md-4 col-md-4 mb-3">
+			<div class="input-group">
+				<span class="input-group-text" id="basic-addon1">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</span>
+				<input type="text" id="pesquisar-projeto" class="form-control" placeholder="Pesquisar projeto" aria-describedby="basic-addon1">
+			</div>
+		</div>
+		@foreach (var item in Model)
+		{
+			<div class="col-sm-12 col-md-6 mb-3">
+				<div class="card">
+					<div class="card-header">
+						<i class="fa-solid fa-diagram-project"></i>
+						Projeto
+					</div>
+					<div class="card-body">
+						<h3 class="card-title">@item.Nome</h3>
+						<div class="mb-3">
+							<span class="badge bg-info text-light">
+								@item.QuantidadeMembros membro(s) no projeto
+							</span>
+						</div>
+						<p class="card-text">@item.Descricao</p>
+						<a class="btn btn-primary" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Ir para projeto</a>
+					</div>
+					<div class="card-footer text-muted">
+						Criado em: @item.CriadoEm?.ToString("dd/MM/yyyy")
+					</div>
+				</div>
+			</div>
+		}
+	}
+	else
+	{
+		<div class="col-12 py-3">
+			<p class="text-center text-muted">Você ainda não criou nenhum projeto...</p>
+		</div>
+	}
+</div>
+
+@{
+	await Html.RenderPartialAsync("_ModalCriarProjeto", new ProjetoViewModel());
+}

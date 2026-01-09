@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Solucoes.Application.DTOs.Projeto;
 using Solucoes.Application.Interfaces.Services;
 using Solucoes.Web.Areas.Projetos.Models.Home;
 
@@ -32,6 +34,24 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Criar(ProjetoViewModel model)
+        {
+            var usuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            await _projetoService.CriarProjetoAsync(new CriarProjetoDTO
+            {
+                Nome = model.Nome,
+                Descricao = model.Descricao,
+                CriadoPorUsuarioId = usuarioId
+            });
+
+            TempData["SuccessMessage"] = "Projeto criado com sucesso!";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

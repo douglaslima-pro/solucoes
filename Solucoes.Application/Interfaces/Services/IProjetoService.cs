@@ -11,5 +11,6 @@ namespace Solucoes.Application.Interfaces.Services
     {
         Task<ProjetoDTO?> ObterProjetoPeloIdAsync(int projetoId);
         Task<IEnumerable<ProjetoDTO>> ObterProjetosCriadosPeloUsuarioAsync(int usuarioId);
+        Task CriarProjetoAsync(CriarProjetoDTO model);
     }
 }
