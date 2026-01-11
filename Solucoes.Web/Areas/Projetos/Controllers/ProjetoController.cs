@@ -49,9 +49,7 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
                 CriadoPorUsuarioId = usuarioId
             });
 
-            TempData["SuccessMessage"] = "Projeto criado com sucesso!";
-
-            return RedirectToAction("Index", "Home");
+            return Created();
         }
     }
 }

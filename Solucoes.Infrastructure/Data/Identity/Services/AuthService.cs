@@ -95,6 +95,12 @@ namespace Solucoes.Infrastructure.Data.Identity.Services
         public async Task<bool> VerifyEmailConfirmationTokenAsync(string email, string token)
         {
             var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
             var result = await _userManager.ConfirmEmailAsync(user!, token);
             return result.Succeeded;
         }

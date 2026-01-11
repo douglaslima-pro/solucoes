@@ -53,4 +53,38 @@
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
+	<script>
+		$(function () {
+			$("#submitFormCriarProjeto").on("click", function () {
+				$("#formCriarProjeto").trigger("submit")
+			})
+
+			$("#formCriarProjeto").on("submit", function (e) {
+				e.preventDefault()
+
+				const formElement = this
+
+				if (!$(formElement).valid()) {
+					return
+				}
+
+				$.ajax({
+					url: "@Url.Action("Criar", "Projeto", new { area = "Projetos" })",
+					type: "post",
+					dataType: "json",
+					contentType: false,
+					processData: false,
+					data: new FormData(formElement)
+				}).done(function () {
+					window.alert("Projeto cadastrado com sucesso!")
+					window.location.reload()
+				}).fail(function (xhr) {
+					if (xhr.status == 400) {
+						var response = JSON.parse(xhr.responseText)
+						$(formElement).validate().showErrors(response.erros)
+					}
+				})
+			})
+		})
+	</script>
 }

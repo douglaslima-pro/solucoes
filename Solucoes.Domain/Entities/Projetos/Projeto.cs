@@ -32,12 +32,12 @@ namespace Solucoes.Domain.Entities.Projetos
         {
             if (string.IsNullOrWhiteSpace(nome))
             {
-                throw new DomainException(string.Empty, "Nome do projeto é obrigatório.");
+                throw new DomainException("Nome", "Nome do projeto é obrigatório.");
             }
 
             if (string.IsNullOrWhiteSpace(descricao))
             {
-                throw new DomainException(string.Empty, "Descrição do projeto é obrigatório.");
+                throw new DomainException("Descricao", "Descrição do projeto é obrigatório.");
             }
 
             Nome = nome;
