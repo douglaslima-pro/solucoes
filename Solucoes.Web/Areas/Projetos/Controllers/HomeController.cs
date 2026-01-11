@@ -47,5 +47,25 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Route("meus-projetos")]
+        public async Task<IActionResult> Projetos()
+        {
+            var usuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var projetos = await _projetoService.ObterProjetosCriadosPeloUsuarioAsync(usuarioId);
+
+            var model = projetos.Select(p => new ProjetoViewModel
+            {
+                Id = p.Id,
+                Nome = p.Nome,
+                Descricao = p.Descricao,
+                CriadoEm = p.CriadoEm,
+                QuantidadeMembros = p.QuantidadeMembros,
+            });
+
+            return PartialView("_Projetos", model);
+        }
     }
 }

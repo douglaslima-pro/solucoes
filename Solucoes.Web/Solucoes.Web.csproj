@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Conta\Views\Shared\**" />
+    <Compile Remove="Areas\Projetos\Views\Shared\**" />
     <Content Remove="Areas\Conta\Views\Shared\**" />
+    <Content Remove="Areas\Projetos\Views\Shared\**" />
     <EmbeddedResource Remove="Areas\Conta\Views\Shared\**" />
+    <EmbeddedResource Remove="Areas\Projetos\Views\Shared\**" />
     <None Remove="Areas\Conta\Views\Shared\**" />
+    <None Remove="Areas\Projetos\Views\Shared\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +28,6 @@
     <Folder Include="Areas\Administracao\Models\" />
     <Folder Include="Areas\Administracao\Views\Shared\" />
     <Folder Include="Areas\Projetos\Models\" />
-    <Folder Include="Areas\Projetos\Views\Shared\" />
   </ItemGroup>
 
   <ItemGroup>

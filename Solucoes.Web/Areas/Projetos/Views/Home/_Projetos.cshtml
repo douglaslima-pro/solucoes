@@ -1,6 +1,4 @@
-﻿@using Solucoes.Web.Areas.Projetos.Models.Home
-
-@model IEnumerable<ProjetoViewModel>
+﻿@model IEnumerable<Solucoes.Web.Areas.Projetos.Models.Home.ProjetoViewModel>
 
 <div class="row my-4">
 	<div class="col-12 mb-3">
@@ -53,7 +51,3 @@
 		</div>
 	}
 </div>
-
-@{
-	await Html.RenderPartialAsync("_ModalCriarProjeto", new ProjetoViewModel());
-}
