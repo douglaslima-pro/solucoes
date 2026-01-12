@@ -4,7 +4,6 @@ html, body {
 
 html {
     font-size: 14px;
-    position: relative;
 }
 
 body {
@@ -17,6 +16,7 @@ main {
     flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
+    position: relative;
 }
 
 @media (min-width: 768px) {
@@ -32,4 +32,23 @@ main {
 
 .form-container-small {
     max-width: 600px;
+}
+
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 0;
+    max-width: 500px;
+    overflow: visible;
+    position: sticky;
+    margin-left: auto;
+    right: .25rem;
+    top: .25rem;
+    width: 100%;
+    z-index: 1000;
+}
+
+.alert-container .alert {
+    margin: 0 !important;
 }

@@ -7,13 +7,6 @@
 }
 
 <div class="container py-5">
-	@if (TempData["SuccessMessage"] != null)
-	{
-		<div class="alert alert-success alert-dismissible col-sm-4 ms-auto fade show" role="alert">
-			@TempData["SuccessMessage"]
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-	}
 	<div class="row">
 		<div class="col-12 mb-3">
 			<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
@@ -83,6 +76,7 @@
 					data: new FormData(formElement)
 				}).done(function () {
 					$("#modalCriarProjeto").modal("hide")
+					showAlert("success", "Projeto criado com sucesso!")
 
 					$(formElement)[0].reset()
 					$(formElement).validate().resetForm()

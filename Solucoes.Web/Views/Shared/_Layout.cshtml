@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	@RenderSection("Styles", required: false)
+	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
 	<header class="shadow">
@@ -50,6 +50,9 @@
 	</header>
 
 	<main>
+		<div class="alert-container" id="alert-container">
+			@await RenderSectionAsync("Alerts", false)
+		</div>
 		@RenderBody()
 	</main>
 
