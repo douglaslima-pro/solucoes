@@ -1,3 +1,7 @@
+:root {
+    --main-background-color: #EEEEEE;
+}
+
 html, body {
     height: 100%;
 }
@@ -13,10 +17,15 @@ body {
 }
 
 main {
+    background-color: var(--main-background-color);
     flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
+}
+
+main > .container {
+    background-color: white;
 }
 
 @media (min-width: 768px) {

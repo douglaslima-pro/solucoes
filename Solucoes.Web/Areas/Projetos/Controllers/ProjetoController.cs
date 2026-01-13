@@ -25,6 +25,11 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
         {
             var dados = await _projetoService.ObterProjetoPeloIdAsync(id);
 
+            if (dados == null)
+            {
+                return RedirectToAction("Index", "Home", new { area = "Projetos" });
+            }
+
             var model = new ProjetoViewModel
             {
                 Id = dados.Id,

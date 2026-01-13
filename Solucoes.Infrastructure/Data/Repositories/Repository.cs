@@ -16,7 +16,7 @@ namespace Solucoes.Infrastructure.Data.Repositories
         protected readonly TContext _context;
         protected readonly DbSet<TEntity> _entity;
 
-        public Repository(TContext context)
+        protected Repository(TContext context)
         {
             _context = context;
             _entity = _context.Set<TEntity>();

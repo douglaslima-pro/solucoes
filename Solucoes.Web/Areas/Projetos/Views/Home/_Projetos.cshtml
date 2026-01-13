@@ -1,4 +1,66 @@
-﻿@model IEnumerable<Solucoes.Web.Areas.Projetos.Models.Home.ProjetoViewModel>
+﻿@using Solucoes.Web.Extensions
+
+@model IEnumerable<Solucoes.Web.Areas.Projetos.Models.Home.ProjetoViewModel>
+
+@functions {
+	DateTime? ConverterEmLocalTime(DateTime? data)
+	{
+		if (!data.HasValue)
+		{
+			return null;
+		}
+
+		DateTime dataConvertida = DateTime.SpecifyKind(data.Value, DateTimeKind.Utc);
+		return dataConvertida.ToLocalTime();
+	}
+
+	string ConverterEmTempoDecorrido(DateTime? data)
+	{
+		if (!data.HasValue)
+		{
+			return "";
+		}
+
+		TimeSpan diferenca = DateTime.Now - data.Value;
+
+		if (diferenca.TotalSeconds < 60)
+		{
+			return FormatarPlural(diferenca.TotalSeconds.Ceil(), "segundo");
+		}
+		else if (diferenca.TotalMinutes < 60)
+		{
+			return FormatarPlural(diferenca.TotalMinutes.Ceil(), "minuto");
+		}
+		else if (diferenca.TotalHours < 24)
+		{
+			return FormatarPlural(diferenca.TotalHours.Ceil(), "hora");
+		}
+		else if (diferenca.TotalDays < 7)
+		{
+			return FormatarPlural(diferenca.TotalDays.Ceil(), "dia");
+		}
+		else if (diferenca.TotalDays < 30)
+		{
+			return FormatarPlural((diferenca.TotalDays / 7).Ceil(), "semana");
+		}
+		else if (diferenca.TotalDays < 365)
+		{
+			return FormatarPlural((diferenca.TotalDays / 30).Ceil(), "mês");
+		}
+		else
+		{
+			return FormatarPlural((diferenca.TotalDays / 365).Ceil(), "ano");
+		}
+	}
+
+	string FormatarPlural(int quantidade, string unidade)
+	{
+		unidade = unidade.ToLower();
+		var unidadePlural = quantidade == 1 ? unidade : (unidade == "mês" ? "meses" : unidade + "s");
+
+		return $"Criado há {quantidade} {unidadePlural} atrás";
+	}
+}
 
 <div class="row my-4">
 	<div class="col-12 mb-3">
@@ -23,22 +85,53 @@
 		{
 			<div class="col-sm-12 col-md-6 mb-3">
 				<div class="card">
-					<div class="card-header">
-						<i class="fa-solid fa-diagram-project"></i>
-						Projeto
+					<div class="card-header d-flex align-items-center justify-content-between">
+						<p class="m-0">
+							<i class="fa-solid fa-diagram-project"></i>
+							Projeto
+						</p>
+						<div class="dropdown">
+							<button type="button" class="btn btn-light" id="project-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-ellipsis"></i>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-start" aria-labelledby="project-dropdown">
+								<li>
+									<a class="dropdown-item" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Abrir</a>
+								</li>
+								<li>
+									<hr class="dropdown-divider" />
+								</li>
+								<li>
+									<button type="button" class="dropdown-item">
+										<i class="fa-solid fa-pen-to-square"></i>
+										Editar
+									</button>
+								</li>
+								<li>
+									<button type="button" class="dropdown-item">
+										<i class="fa-solid fa-trash-can"></i>
+										Excluir
+									</button>
+								</li>
+							</ul>
+						</div>
+						
 					</div>
 					<div class="card-body">
-						<h3 class="card-title">@item.Nome</h3>
+						<a class="card-title h3 text-primary text-decoration-none d-block mb-3" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">
+							@item.Nome
+						</a>
+						<p class="card-text text-truncate" title="@item.Descricao">
+							@item.Descricao
+						</p>
 						<div class="mb-3">
 							<span class="badge bg-info text-light">
-								@item.QuantidadeMembros membro(s) no projeto
+								@item.QuantidadeMembros @(item.QuantidadeMembros == 1 ? "membro" : "membros") no projeto
 							</span>
 						</div>
-						<p class="card-text">@item.Descricao</p>
-						<a class="btn btn-primary" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Ir para projeto</a>
 					</div>
 					<div class="card-footer text-muted">
-						Criado em: @item.CriadoEm?.ToString("dd/MM/yyyy")
+						@ConverterEmTempoDecorrido(ConverterEmLocalTime(item.CriadoEm))
 					</div>
 				</div>
 			</div>

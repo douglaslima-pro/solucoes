@@ -13,6 +13,7 @@ namespace Solucoes.Domain.Repositories
     {
         Task AddAsync(TEntity entity);
         void UpdateAsync(TEntity entity);
+        Task<bool> RemoveAsync(TKey id);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
     }

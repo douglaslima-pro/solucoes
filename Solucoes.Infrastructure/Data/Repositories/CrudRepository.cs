@@ -31,6 +31,19 @@ namespace Solucoes.Infrastructure.Data.Repositories
             _entity.Remove(entity);
         }
 
+        public async Task<bool> RemoveAsync(TKey id)
+        {
+            var entity = await _entity.FindAsync(id);
+
+            if (entity == null)
+            {
+                return false;
+            }
+
+            _entity.Remove(entity);
+            return true;
+        }
+
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _entity.RemoveRange(entities);

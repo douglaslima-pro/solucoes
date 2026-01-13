@@ -23,7 +23,7 @@ function showAlert(type, message, timeout = 10000) {
     ]
 
     if (!acceptedTypes.includes(type)) {
-        throw new Error("Type argument passed to function does not match a valid alert type!")
+        throw new Error("Argument 'type' passed to function does not match a valid alert type!")
     }
 
     const alertContainer = document.getElementById("alert-container")

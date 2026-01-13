@@ -27,13 +27,18 @@
 							</li>
 						</ul>
 						<div class="dropdown">
-							<button type="button" class="btn btn-light btn-sm dropdown-toggle" id="logged-user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							<button type="button" class="btn btn-light btn-sm" id="logged-user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 								<i class="fa-solid fa-user"></i>
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="logged-user-dropdown">
 								<li><h6 class="dropdown-header">@User.Identity?.Name</h6></li>
 								<li><hr class="dropdown-divider" /></li>
-								<li><a class="dropdown-item" asp-area="Conta" asp-controller="Auth" asp-action="Logout">Sair</a></li>
+								<li>
+									<a class="dropdown-item" asp-area="Conta" asp-controller="Auth" asp-action="Logout">
+										<i class="fa-solid fa-right-from-bracket"></i>
+										Sair
+									</a>
+								</li>
 							</ul>
 						</div>
 					</div>
