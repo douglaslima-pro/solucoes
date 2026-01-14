@@ -6,6 +6,14 @@
 	ViewData["Title"] = "Página Inicial - Projetos";
 }
 
+@section Styles {
+	<style>
+		a.card-title:hover {
+			text-decoration: underline !important;
+		}
+	</style>
+}
+
 <div class="container py-5">
 	<div class="row">
 		<div class="col-12 mb-3">
@@ -42,7 +50,24 @@
 				<div class="card-body">
 					<div class="tab-content" id="tab-content">
 						<div class="tab-pane fade show active" id="projetos" role="tabpanel" aria-labelledby="projetos-tab">
-							@await Html.PartialAsync("_Projetos", Model)
+							<div class="row my-4">
+								<div class="col-sm-12 col-md-4">
+									<h3>Meus projetos</h3>
+								</div>
+								<div class="col-sm-12 col-md-8 d-flex align-items-center justify-content-end gap-2">
+									<button type="button" class="btn btn-light" onclick="recarregarProjetos()">
+										<i class="fa-solid fa-arrows-rotate"></i>
+										Atualizar
+									</button>
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
+										<i class="fa-solid fa-plus"></i>
+										Criar projeto
+									</button>
+								</div>
+							</div>
+							<div id="projetosContainer">
+								@await Html.PartialAsync("_Projetos", Model)
+							</div>
 						</div>
 						<div class="tab-pane fade" id="convites" role="tabpanel" aria-labelledby="convites-tab">
 							@{
@@ -71,6 +96,10 @@
 	}
 	<script>
 		$(function () {
+			setInterval(() => {
+				recarregarProjetos()
+			}, 120000)
+
 			$("#submitFormCriarProjeto").on("click", function () {
 				$("#formCriarProjeto").trigger("submit")
 			})
@@ -109,7 +138,7 @@
 		})
 
 		function recarregarProjetos() {
-			$("#projetos").html(`
+			$("#projetosContainer").html(`
 				<div class="row">
 					<div class="col-12 py-3">
 						<p class="text-center text-muted">
@@ -124,10 +153,24 @@
 				url: "@Url.Action("Projetos", "Home", new { area = "Projetos" })",
 				type: "get"
 			}).done(function (dados) {
-				$("#projetos").html(dados)
+				$("#projetosContainer").html(dados)
 			}).fail(function () {
 				window.location.reload()
 			})
+		}
+
+		function filtrarProjetos(e) {
+			var filtro = e.target.value.toLowerCase()
+
+			var projetos = Array.from(document.getElementsByClassName("projeto"))
+
+			for (var p of projetos) {
+				if (p.querySelector(".card-title").innerText.toLowerCase().includes(filtro)) {
+					p.parentElement.classList.remove("d-none")
+				} else {
+					p.parentElement.classList.add("d-none")
+				}
+			}
 		}
 	</script>
 }
