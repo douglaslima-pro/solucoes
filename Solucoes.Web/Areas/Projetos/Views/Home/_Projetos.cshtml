@@ -62,51 +62,18 @@
 	}
 }
 
-<div class="row">
-	@if (Model.Count() > 0)
-	{
-		<div class="col-sm-12 offset-md-4 col-md-4 mb-3">
-			<div class="input-group">
-				<span class="input-group-text" id="basic-addon1">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</span>
-				<input type="text" id="pesquisar-projeto" class="form-control" placeholder="Pesquisar projeto" aria-describedby="basic-addon1" oninput="filtrarProjetos(event)">
-			</div>
-		</div>
+@if (Model.Count() > 0)
+{
+	<div class="row">
 		@foreach (var item in Model)
 		{
-			<div class="col-sm-12 col-md-6 mb-3">
+			<div class="col-12 mb-3">
 				<div class="card projeto">
 					<div class="card-header d-flex align-items-center justify-content-between">
-						<p class="m-0">
+						<h6 class="m-0 text-muted fw-normal">
 							<i class="fa-solid fa-diagram-project"></i>
 							Projeto
-						</p>
-						<div class="dropdown">
-							<button type="button" class="btn btn-light" id="project-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-start" aria-labelledby="project-dropdown">
-								<li>
-									<a class="dropdown-item" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">Abrir</a>
-								</li>
-								<li>
-									<hr class="dropdown-divider" />
-								</li>
-								<li>
-									<button type="button" class="dropdown-item">
-										<i class="fa-solid fa-pen-to-square"></i>
-										Editar
-									</button>
-								</li>
-								<li>
-									<button type="button" class="dropdown-item">
-										<i class="fa-solid fa-trash-can"></i>
-										Excluir
-									</button>
-								</li>
-							</ul>
-						</div>
+						</h6>
 					</div>
 					<div class="card-body">
 						<a class="card-title h4 text-primary text-decoration-none d-inline-block mb-3" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">
@@ -127,11 +94,13 @@
 				</div>
 			</div>
 		}
-	}
-	else
-	{
+	</div>
+}
+else
+{
+	<div class="row">
 		<div class="col-12 py-3">
 			<p class="text-center text-muted">Você ainda não criou nenhum projeto...</p>
 		</div>
-	}
-</div>
+	</div>
+}

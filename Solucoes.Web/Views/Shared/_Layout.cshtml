@@ -23,8 +23,20 @@
 					<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 						<ul class="navbar-nav flex-grow-1">
 							<li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Projetos" asp-controller="Home" asp-action="Index">Projetos</a>
+                                <a class="nav-link text-light" asp-area="Projetos" asp-controller="Home" asp-action="Index">
+									<i class="fa-solid fa-diagram-project"></i>
+									Projetos
+								</a>
 							</li>
+							@if (User.IsInRole("Administrador"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="Administracao" asp-controller="Home" asp-action="Index">
+										<i class="fa-solid fa-user-gear"></i>
+										Administração
+									</a>
+								</li>
+							}
 						</ul>
 						<div class="dropdown">
 							<button type="button" class="btn btn-light btn-sm" id="logged-user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">

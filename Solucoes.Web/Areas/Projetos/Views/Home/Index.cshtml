@@ -18,67 +18,38 @@
 	<div class="row">
 		<div class="col-12 mb-3">
 			<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
-			<p>Esta é a página inicial da área de Projetos.</p>
-			<p>Aqui você pode gerenciar seus projetos, convites e tarefas.</p>
+			<p>Esta é a página inicial da área de projetos.</p>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">
-					<ul class="nav nav-tabs card-header-tabs" id="tab" role="tablist">
-						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="projetos-tab" data-bs-toggle="tab" data-bs-target="#projetos" type="button" role="tab" aria-controls="projetos" aria-selected="true">
-								<i class="fa-solid fa-diagram-project"></i>
-								Projetos
-							</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="convites-tab" data-bs-toggle="tab" data-bs-target="#convites" type="button" role="tab" aria-controls="convites" aria-selected="false">
-								<i class="fa-regular fa-envelope"></i>
-								Convites
-							</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="tarefas-tab" data-bs-toggle="tab" data-bs-target="#tarefas" type="button" role="tab" aria-controls="tarefas" aria-selected="false">
-								<i class="fa-regular fa-calendar-check"></i>
-								Tarefas
-							</button>
-						</li>
-					</ul>
-				</div>
 				<div class="card-body">
-					<div class="tab-content" id="tab-content">
-						<div class="tab-pane fade show active" id="projetos" role="tabpanel" aria-labelledby="projetos-tab">
-							<div class="row my-4">
-								<div class="col-sm-12 col-md-4">
-									<h3>Meus projetos</h3>
-								</div>
-								<div class="col-sm-12 col-md-8 d-flex align-items-center justify-content-end gap-2">
-									<button type="button" class="btn btn-light" onclick="recarregarProjetos()">
-										<i class="fa-solid fa-arrows-rotate"></i>
-										Atualizar
-									</button>
-									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
-										<i class="fa-solid fa-plus"></i>
-										Criar projeto
-									</button>
-								</div>
-							</div>
-							<div id="projetosContainer">
-								@await Html.PartialAsync("_Projetos", Model)
+					<div class="row my-4">
+						<div class="col-sm-12 col-md-12 col-lg-3 mb-3">
+							<h3 class="m-0">Meus projetos</h3>
+						</div>
+						<div class="col-sm-12 col-md-7 col-lg-5 mb-3">
+							<div class="input-group">
+								<span class="input-group-text" id="basic-addon1">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</span>
+								<input type="text" id="pesquisar-projeto" class="form-control" placeholder="Pesquisar projeto" aria-describedby="basic-addon1" oninput="filtrarProjetos(event)">
 							</div>
 						</div>
-						<div class="tab-pane fade" id="convites" role="tabpanel" aria-labelledby="convites-tab">
-							@{
-								await Html.RenderPartialAsync("_Convites");
-							}
+						<div class="col-sm-12 col-md-5 col-lg-4 mb-3 d-flex align-items-center justify-content-end gap-2">
+							<button type="button" class="btn btn-light" onclick="recarregarProjetos()">
+								<i class="fa-solid fa-arrows-rotate"></i>
+								Atualizar
+							</button>
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
+								<i class="fa-solid fa-plus"></i>
+								Criar projeto
+							</button>
 						</div>
-						<div class="tab-pane fade" id="tarefas" role="tabpanel" aria-labelledby="tarefas-tab">
-							@{
-								await Html.RenderPartialAsync("_Tarefas");
-							}
-						</div>
+					</div>
+					<div id="projetosContainer">
+						@await Html.PartialAsync("_Projetos", Model)
 					</div>
 				</div>
 			</div>
@@ -98,7 +69,7 @@
 		$(function () {
 			setInterval(() => {
 				recarregarProjetos()
-			}, 120000)
+			}, 60000)
 
 			$("#submitFormCriarProjeto").on("click", function () {
 				$("#formCriarProjeto").trigger("submit")
