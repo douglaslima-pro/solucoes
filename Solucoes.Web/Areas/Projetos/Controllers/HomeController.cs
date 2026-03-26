@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Solucoes.Application.Interfaces.Identity;
 using Solucoes.Application.Interfaces.Services;
-using Solucoes.Web.Areas.Projetos.Models.Home;
+using Solucoes.Web.Areas.Projetos.Models.Projeto;
 using System.Security.Claims;
 
 namespace Solucoes.Web.Areas.Projetos.Controllers

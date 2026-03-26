@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Solucoes.Application.DTOs.Projeto;
 using Solucoes.Application.Interfaces.Services;
-using Solucoes.Web.Areas.Projetos.Models.Home;
+using Solucoes.Web.Areas.Projetos.Models.Projeto;
 
 namespace Solucoes.Web.Areas.Projetos.Controllers
 {

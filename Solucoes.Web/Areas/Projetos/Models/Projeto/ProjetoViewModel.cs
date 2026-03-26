@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Solucoes.Web.Areas.Projetos.Models.Home
+namespace Solucoes.Web.Areas.Projetos.Models.Projeto
 {
     public class ProjetoViewModel
     {
