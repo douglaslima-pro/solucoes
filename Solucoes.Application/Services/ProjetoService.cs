@@ -52,7 +52,8 @@ namespace Solucoes.Application.Services
                 Descricao = x.Descricao,
                 CriadoEm = x.CriadoEm,
                 CriadoPorUsuarioId = x.CriadoPorUsuarioId,
-                QuantidadeMembros = x.Membros.Count()
+                QuantidadeMembros = x.Membros.Count(),
+                QuantidadeSprints = x.Sprints.Count()
             });
         }
     }

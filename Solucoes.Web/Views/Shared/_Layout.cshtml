@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+	var usuarioNome = User.FindFirst("PrimeiroNome")?.Value;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -39,8 +43,9 @@
 							}
 						</ul>
 						<div class="dropdown">
-							<button type="button" class="btn btn-light btn-sm" id="logged-user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fa-solid fa-user"></i>
+							<button type="button" class="btn btn-sm text-white" id="logged-user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								@usuarioNome
+								<i class="fa-solid fa-chevron-down"></i>
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="logged-user-dropdown">
 								<li><h6 class="dropdown-header">@User.Identity?.Name</h6></li>

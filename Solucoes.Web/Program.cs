@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Solucoes.Infrastructure.IoC;
+using Solucoes.Web.Claims;
 using Solucoes.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,8 @@ builder.Services.AddRouting(options =>
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddTransient<IClaimsTransformation, ClaimsTransformation>();
 
 var app = builder.Build();
 

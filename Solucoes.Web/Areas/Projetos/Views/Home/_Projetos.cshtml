@@ -68,28 +68,30 @@
 		@foreach (var item in Model)
 		{
 			<div class="col-12 mb-3">
-				<div class="card projeto">
-					<div class="card-header d-flex align-items-center justify-content-between">
-						<h6 class="m-0 text-muted fw-normal">
-							<i class="fa-solid fa-diagram-project"></i>
-							Projeto
-						</h6>
-					</div>
+				<div class="card shadow-sm projeto">
 					<div class="card-body">
 						<a class="card-title h4 text-primary text-decoration-none d-inline-block mb-3" asp-area="Projetos" asp-controller="Projeto" asp-action="Index" asp-route-id="@item.Id">
 							@item.Nome
 						</a>
-						<p class="card-text text-truncate" title="@item.Descricao">
-							@item.Descricao
+						<p class="text-muted">
+							<small>@ConverterEmTempoDecorrido(ConverterEmLocalTime(item.CriadoEm))</small>
 						</p>
+						@if (!string.IsNullOrEmpty(item.Descricao))
+						{
+							<p class="card-text text-truncate" title="@item.Descricao">
+								@item.Descricao
+							</p>
+						}
 						<div class="mb-3">
-							<span class="badge bg-info text-light">
-								@item.QuantidadeMembros @(item.QuantidadeMembros == 1 ? "membro" : "membros") no projeto
+							<span class="me-2">
+								<i class="fa-solid fa-users"></i>
+								@item.QuantidadeMembros @(item.QuantidadeMembros == 1 ? "membro" : "membros")
+							</span>
+							<span>
+								<i class="fa-solid fa-arrows-spin"></i>
+								@item.QuantidadeSprints @(item.QuantidadeSprints == 1 ? "sprint" : "sprints")
 							</span>
 						</div>
-					</div>
-					<div class="card-footer text-muted">
-						<small>@ConverterEmTempoDecorrido(ConverterEmLocalTime(item.CriadoEm))</small>
 					</div>
 				</div>
 			</div>

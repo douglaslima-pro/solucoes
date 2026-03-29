@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Solucoes.Domain.Entities;
 
-namespace Solucoes.Domain.Repositories
+namespace Solucoes.Domain.Repositories.Base
 {
-    public interface ICrudRepository<TEntity, TKey> : IReadOnlyRepository<TEntity, TKey>, IWriteOnlyRepository<TEntity, TKey>
+    public interface IReadOnlyRepository<TEntity, TKey> : IRepository<TEntity>
         where TEntity : AggregateRoot
         where TKey : struct
     {
-
+        Task<TEntity?> FindByIdAsync(TKey id);
     }
 }

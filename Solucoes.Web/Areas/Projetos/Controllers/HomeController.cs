@@ -12,15 +12,10 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
     [Route("[area]")]
     public class HomeController : Controller
     {
-        private readonly IUsuarioService _usuarioService;
         private readonly IProjetoService _projetoService;
 
-        public HomeController(
-            IUsuarioService usuarioService,
-            IProjetoService projetoService
-            )
+        public HomeController(IProjetoService projetoService)
         {
-            _usuarioService = usuarioService;
             _projetoService = projetoService;
         }
 
@@ -29,10 +24,6 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
         public async Task<IActionResult> Index()
         {
             var usuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-
-            var usuario = await _usuarioService.ObterPeloIdAsync(usuarioId);
-
-            ViewBag.UsuarioNome = usuario?.PrimeiroNome;
 
             var projetos = await _projetoService.ObterProjetosCriadosPeloUsuarioAsync(usuarioId);
 
@@ -63,6 +54,7 @@ namespace Solucoes.Web.Areas.Projetos.Controllers
                 Descricao = p.Descricao,
                 CriadoEm = p.CriadoEm,
                 QuantidadeMembros = p.QuantidadeMembros,
+                QuantidadeSprints = p.QuantidadeSprints
             });
 
             return PartialView("_Projetos", model);

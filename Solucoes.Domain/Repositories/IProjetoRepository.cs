@@ -1,4 +1,5 @@
 ﻿using Solucoes.Domain.Entities.Projetos;
+using Solucoes.Domain.Repositories.Base;
 
 namespace Solucoes.Domain.Repositories
 {

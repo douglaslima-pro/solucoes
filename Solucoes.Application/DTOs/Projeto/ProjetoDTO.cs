@@ -14,5 +14,6 @@ namespace Solucoes.Application.DTOs.Projeto
         public int CriadoPorUsuarioId { get; set; }
         public DateTime? CriadoEm { get; set; }
         public int QuantidadeMembros { get; set; }
+        public int QuantidadeSprints { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace Solucoes.Web.Areas.Projetos.Models.Projeto
         public string? CriadoPorUsuarioNome { get; set; }
         public DateTime? CriadoEm { get; set; }
         public int QuantidadeMembros { get; set; }
+        public int QuantidadeSprints { get; set; }
     }
 }

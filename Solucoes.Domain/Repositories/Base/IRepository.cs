@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Solucoes.Domain.Entities;
 
-namespace Solucoes.Domain.Repositories
+namespace Solucoes.Domain.Repositories.Base
 {
     public interface IRepository<TEntity>
         where TEntity : AggregateRoot

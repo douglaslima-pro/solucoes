@@ -4,6 +4,7 @@
 
 @{
 	ViewData["Title"] = "Página Inicial - Projetos";
+	var usuarioNome = User.FindFirst("PrimeiroNome")?.Value;
 }
 
 @section Styles {
@@ -11,51 +12,51 @@
 		a.card-title:hover {
 			text-decoration: underline !important;
 		}
+
+		@@media screen and (max-width: 576px) {
+			.search-input {
+				width: 100%;
+			}
+		}
 	</style>
 }
 
-<div class="container py-5">
+<div class="container bg-white py-5">
 	<div class="row">
-		<div class="col-12 mb-3">
-			<h1>Bem-vindo, @(ViewBag.UsuarioNome)!</h1>
+		<div class="col-12">
+			<h1>Bem-vindo, @usuarioNome!</h1>
 			<p>Esta é a página inicial da área de projetos.</p>
 		</div>
 	</div>
+	<hr />
 	<div class="row">
-		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<div class="row my-4">
-						<div class="col-sm-12 col-md-12 col-lg-3 mb-3">
-							<h3 class="m-0">Meus projetos</h3>
-						</div>
-						<div class="col-sm-12 col-md-7 col-lg-5 mb-3">
-							<div class="input-group">
-								<span class="input-group-text" id="basic-addon1">
-									<i class="fa-solid fa-magnifying-glass"></i>
-								</span>
-								<input type="text" id="pesquisar-projeto" class="form-control" placeholder="Pesquisar projeto" aria-describedby="basic-addon1" oninput="filtrarProjetos(event)">
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-5 col-lg-4 mb-3 d-flex align-items-center justify-content-end gap-2">
-							<button type="button" class="btn btn-light" onclick="recarregarProjetos()">
-								<i class="fa-solid fa-arrows-rotate"></i>
-								Atualizar
-							</button>
-							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
-								<i class="fa-solid fa-plus"></i>
-								Criar projeto
-							</button>
-						</div>
-					</div>
-					<div id="projetosContainer">
-						@await Html.PartialAsync("_Projetos", Model)
-					</div>
+		<div class="col-12 mb-3">
+			<h3 class="m-0">Meus projetos</h3>
+		</div>
+		<div class="col-12 d-flex flex-wrap gap-2 mb-3">
+			<div class="flex-fill search-input">
+				<div class="input-group">
+					<span class="input-group-text" id="basic-addon1">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</span>
+					<input type="text" id="pesquisar-projeto" class="form-control" placeholder="Pesquisar projeto" aria-describedby="basic-addon1" oninput="filtrarProjetos(event)">
 				</div>
 			</div>
+			<button type="button" class="btn btn-light ms-auto" onclick="recarregarProjetos()">
+				<i class="fa-solid fa-arrows-rotate"></i>
+				Atualizar
+			</button>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto">
+				<i class="fa-solid fa-plus"></i>
+				Criar projeto
+			</button>
 		</div>
 	</div>
+	<div id="projetosContainer">
+		@await Html.PartialAsync("_Projetos", Model)
+	</div>
 </div>
+
 
 @{
 	await Html.RenderPartialAsync("_ModalCriarProjeto", new ProjetoViewModel());

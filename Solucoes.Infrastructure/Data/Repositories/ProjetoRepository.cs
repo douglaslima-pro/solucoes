@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solucoes.Domain.Entities.Projetos;
 using Solucoes.Domain.Repositories;
+using Solucoes.Infrastructure.Data.Repositories.Base;
 
 namespace Solucoes.Infrastructure.Data.Repositories
 {
@@ -13,6 +14,7 @@ namespace Solucoes.Infrastructure.Data.Repositories
             return await _entity
                 .AsNoTracking()
                 .Include(x => x.Membros)
+                .Include(x => x.Sprints)
                 .Where(x => x.CriadoPorUsuarioId == usuarioId)
                 .OrderByDescending(x => x.CriadoEm)
                 .ToListAsync();

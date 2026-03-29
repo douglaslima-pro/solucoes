@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solucoes.Domain.Entities;
-using Solucoes.Domain.Repositories;
+using Solucoes.Domain.Repositories.Base;
 
-namespace Solucoes.Infrastructure.Data.Repositories
+namespace Solucoes.Infrastructure.Data.Repositories.Base
 {
     /// <summary>
     /// Implementação da interface <see cref="IRepository"/> utilizando Entity Framework Core

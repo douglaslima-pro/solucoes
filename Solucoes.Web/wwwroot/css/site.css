@@ -1,9 +1,8 @@
 :root {
-    --main-background-color: #EEEEEE;
-}
-
-html, body {
-    height: 100%;
+    --gradient-1: #061E29;
+    --gradient-2: #1D546D;
+    --gradient-3: #5F9598;
+    --gradient-4: #F3F4F4;
 }
 
 html {
@@ -11,21 +10,15 @@ html {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    background-color: var(--gradient-4);
+}
+
+header nav.navbar {
+    background-color: var(--gradient-1) !important;
 }
 
 main {
-    background-color: var(--main-background-color);
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
     position: relative;
-}
-
-main > .container {
-    background-color: white;
 }
 
 @media (min-width: 768px) {

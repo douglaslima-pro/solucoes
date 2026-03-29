@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Solucoes.Domain.Entities;
-using Solucoes.Domain.Repositories;
+using Solucoes.Domain.Repositories.Base;
 
-namespace Solucoes.Infrastructure.Data.Repositories
+namespace Solucoes.Infrastructure.Data.Repositories.Base
 {
     public class CrudRepository<TEntity, TKey, TContext> : Repository<TEntity, TContext>, ICrudRepository<TEntity, TKey>
         where TEntity : AggregateRoot
