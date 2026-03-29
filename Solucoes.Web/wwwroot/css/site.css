@@ -1,8 +1,12 @@
 :root {
-    --gradient-1: #061E29;
-    --gradient-2: #1D546D;
-    --gradient-3: #5F9598;
-    --gradient-4: #F3F4F4;
+    --main-gradient-1: #355872;
+    --main-gradient-2: #7AAACE;
+    --main-gradient-3: #9CD5FF;
+    --main-gradient-4: #F7F8F0;
+    --cold-gradient-1: #35155D;
+    --cold-gradient-2: #512B81;
+    --cold-gradient-3: #4477CE;
+    --cold-gradient-4: #8CABFF;
 }
 
 html {
@@ -10,11 +14,11 @@ html {
 }
 
 body {
-    background-color: var(--gradient-4);
+    background-color: var(--main-gradient-4);
 }
 
 header nav.navbar {
-    background-color: var(--gradient-1) !important;
+    background-color: var(--main-gradient-1) !important;
 }
 
 main {
@@ -54,3 +58,13 @@ main {
 .alert-container .alert {
     margin: 0 !important;
 }
+
+/* BOOTSTRAP */
+.modal.modal-default .modal-dialog .modal-content .modal-header {
+    background-color: var(--main-gradient-1) !important;
+}
+
+.card.card-default .card-header {
+    background-color: var(--main-gradient-1) !important;
+}
+

@@ -1,11 +1,11 @@
 ﻿@model Solucoes.Web.Areas.Projetos.Models.Projeto.ProjetoViewModel
 
-<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modalCriarProjeto" tabindex="-1" aria-labelledby="modalCriarProjetoLabel" aria-hidden="true">
+<div class="modal modal-default fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modalCriarProjeto" tabindex="-1" aria-labelledby="modalCriarProjetoLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalCriarProjetoLabel">Criar Projeto</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<h5 class="modal-title text-white" id="modalCriarProjetoLabel">Criar Projeto</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				@Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
